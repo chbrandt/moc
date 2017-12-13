@@ -37,7 +37,7 @@ def table_to_moc(table, ra, dec, radius, factor=2, outfile=None):
         radius = radius * units.degree
 
     size = factor*radius
-    level = size_to_level(size)
+    level = size_to_level(size, truncate=True)
 
     moc = MOC.from_table(table, ra, dec, level)
     if outfile:
