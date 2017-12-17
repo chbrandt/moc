@@ -1,0 +1,5 @@
+docker run --rm -v /scratch/work:/work chbrandt/swift_deepsky --ra 21.62109 --dec 33.15289 --radius 13.740 --label 0_21_33
+docker run --rm -v /scratch/work:/work chbrandt/swift_deepsky --ra 22.85156 --dec 32.97485 --radius 13.740 --label 1_22_32
+docker run --rm -v /scratch/work:/work chbrandt/swift_deepsky --ra 21.26953 --dec 33.15289 --radius 13.740 --label 2_21_33
+docker run --rm -v /scratch/work:/work chbrandt/swift_deepsky --ra 22.14844 --dec 33.68919 --radius 13.740 --label 3_22_33
+docker run --rm -v /scratch/work:/work chbrandt/swift_deepsky --ra 21.79688 --dec 33.33129 --radius 13.740 --label 4_21_33
