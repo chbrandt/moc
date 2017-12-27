@@ -1,3 +1,5 @@
+import itertools
+import numpy as np
 from astropy import units
 from .core import HEALPIX_LEVELS
 
@@ -29,7 +31,7 @@ def size_to_level(size, truncate=False):
 
     levels = list(HEALPIX_LEVELS.keys())
     levels.sort()
-    
+
     ko = None
     for i in levels:
         ko = i
@@ -38,3 +40,31 @@ def size_to_level(size, truncate=False):
             break
     ko = max(0, ko - int(truncate))
     return ko
+
+
+def naive_region2pointings(ramin, ramax, decmin, decmax, radius):
+
+    bbox = dict(ramin=ramin * units.degree,
+                ramax=ramax * units.degree,
+                decmin=decmin * units.degree,
+                decmax=decmax * units.degree)
+
+    try:
+        rad = radius.to('arcmin')
+    except:
+        rad = radius * units.arcmin
+
+    # get the closest smaller size of healpix elements
+    level = size_to_level(rad, truncate=True)
+    #
+    dsize = HEALPIX_LEVELS[level]
+
+    # create a grid of (fake) coordinates, to then create a MOC table from it
+    step_size = dsize.to('deg').value/2**0.5
+
+    ra_vec = np.arange(bbox['ramin'].value, bbox['ramax'].value, step_size)
+    dec_vec = np.arange(bbox['decmin'].value, bbox['decmax'].value, step_size)
+
+    grid = np.asarray(list(itertools.product(ra_vec, dec_vec))).T
+
+    return grid
